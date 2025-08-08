@@ -1,4 +1,3 @@
-
 package com.example.kursushub.ui.main
 
 import android.content.Intent
@@ -10,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.kursushub.R
 import com.example.kursushub.ui.auth.login.LoginActivity
+import com.example.kursushub.ui.onBoarding.OnboardingActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         val isFirstTimeUser = true
 
         if (isFirstTimeUser) {
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, OnboardingActivity::class.java)
             startActivity(intent)
             finish()
         } else if (isUserLoggedIn) {
@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)

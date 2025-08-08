@@ -8,6 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.kursushub.R
 import com.example.kursushub.databinding.ActivityRegisterBinding
+import com.example.kursushub.ui.auth.login.LoginActivity
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -26,7 +27,7 @@ class RegisterActivity : AppCompatActivity() {
 
         val tvSignIn = binding.tvSignInSignUp
         tvSignIn.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
     }
