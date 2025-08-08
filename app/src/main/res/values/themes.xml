@@ -11,6 +11,5 @@
         <item name="postSplashScreenTheme">@style/Theme.KursusHub</item>
     </style>
 
-
     <style name="Theme.KursusHub" parent="Base.Theme.KursusHub" />
 </resources>
