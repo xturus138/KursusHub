@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "997493895764",
+    "project_id": "kursushub-fb1f9",
+    "storage_bucket": "kursushub-fb1f9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997493895764:android:b26e24f3127e64232db3c1",
+        "android_client_info": {
+          "package_name": "com.example.kursushub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "997493895764-l3lsbd4888q7nn8h98lumd4nb8o157p0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKgbey0Wuu-33M5SqQAUVYYyn6PiTfk4E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "997493895764-l3lsbd4888q7nn8h98lumd4nb8o157p0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
