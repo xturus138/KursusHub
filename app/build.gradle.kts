@@ -40,6 +40,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.play.services.auth)
     implementation (libs.androidx.viewpager2)
     implementation (libs.androidx.core.splashscreen)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
