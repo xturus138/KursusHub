@@ -4,5 +4,13 @@
         <item name="android:colorBackground">@color/white</item>
     </style>
 
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/blueButton</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_baseline_logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.KursusHub</item>
+    </style>
+
+
     <style name="Theme.KursusHub" parent="Base.Theme.KursusHub" />
 </resources>
