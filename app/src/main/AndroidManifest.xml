@@ -13,7 +13,19 @@
         android:theme="@style/Theme.KursusHub"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.auth.forget.ForgetPassword"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.register.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.login.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +33,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
