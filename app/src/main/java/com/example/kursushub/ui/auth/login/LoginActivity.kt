@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.kursushub.R
 import com.example.kursushub.databinding.ActivityLoginBinding
 import com.example.kursushub.ui.auth.register.RegisterActivity
+import com.example.kursushub.ui.main.HomeActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -65,9 +66,7 @@ class LoginActivity : AppCompatActivity() {
                 }
                 is LoginViewModel.AuthResult.Success -> {
                     Toast.makeText(this, result.message, Toast.LENGTH_SHORT).show()
-                    // Navigate to MainActivity or HomeActivity
-                    // startActivity(Intent(this, MainActivity::class.java))
-                    finish()
+                    startActivity(Intent(this, HomeActivity::class.java))
                 }
                 is LoginViewModel.AuthResult.Error -> {
                     Toast.makeText(this, result.error, Toast.LENGTH_SHORT).show()
