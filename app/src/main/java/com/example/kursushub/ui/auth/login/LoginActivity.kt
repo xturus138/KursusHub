@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.kursushub.R
 import com.example.kursushub.databinding.ActivityLoginBinding
+import com.example.kursushub.ui.ViewModelFactory // <-- Tambahkan import ini
 import com.example.kursushub.ui.auth.register.RegisterActivity
 import com.example.kursushub.ui.main.HomeActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -42,7 +43,8 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+        val factory = ViewModelFactory.getInstance(this)
+        viewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
