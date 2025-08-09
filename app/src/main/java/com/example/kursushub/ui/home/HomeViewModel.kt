@@ -6,10 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kursushub.data.model.School
 import com.example.kursushub.data.repository.SchoolRepository
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
     private val repository = SchoolRepository()
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     private val _schools = MutableLiveData<List<School>>()
     val schools: LiveData<List<School>> = _schools
@@ -17,9 +19,22 @@ class HomeViewModel : ViewModel() {
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
 
+    private val _userName = MutableLiveData<String>()
+    val userName: LiveData<String> = _userName
+
     private var currentPage = 1
     var isLoading = false
     private var isLastPage = false
+
+    init {
+        loadUserName()
+    }
+
+    private fun loadUserName() {
+        val user = auth.currentUser
+        _userName.value = user?.displayName?.split(" ")?.get(0) ?: "User"
+    }
+
 
     fun loadSchools(jenjang: String?, reset: Boolean = false) {
         if (isLoading || (isLastPage && !reset)) return

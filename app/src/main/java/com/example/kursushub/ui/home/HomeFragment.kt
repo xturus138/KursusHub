@@ -7,15 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
-import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kursushub.R
+import com.example.kursushub.ui.ViewModelFactory
 import com.example.kursushub.ui.adapter.SchoolAdapter
-import com.example.kursushub.ui.profile.ProfileFragment
 import com.google.android.material.chip.ChipGroup
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
@@ -40,24 +40,18 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        val factory = ViewModelFactory.getInstance(requireActivity())
+        viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
 
         val rvSchools = view.findViewById<RecyclerView>(R.id.rvSchools)
         val etSearch = view.findViewById<EditText>(R.id.etSearch)
         val chipGroup = view.findViewById<ChipGroup>(R.id.chipGroupFilter)
-        val profileButton = view.findViewById<CardView>(R.id.cardViewProfile)
+        val tvGreetings = view.findViewById<TextView>(R.id.tvGreetingsUser)
 
         setupRecyclerView(rvSchools)
-        observeViewModel()
+        observeViewModel(tvGreetings)
         setupSearch(etSearch, chipGroup)
         setupFilter(chipGroup)
-
-        profileButton.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, ProfileFragment())
-                .addToBackStack(null)
-                .commit()
-        }
 
         if (savedInstanceState == null) {
             chipGroup.check(R.id.chip_all)
@@ -90,14 +84,18 @@ class HomeFragment : Fragment() {
         })
     }
 
-    private fun observeViewModel() {
+    private fun observeViewModel(tvGreetings: TextView) {
         viewModel.schools.observe(viewLifecycleOwner) { schools ->
             schoolAdapter.setData(schools ?: emptyList())
         }
         viewModel.error.observe(viewLifecycleOwner) { error ->
             Toast.makeText(context, "Error: $error", Toast.LENGTH_LONG).show()
         }
+        viewModel.userName.observe(viewLifecycleOwner) { name ->
+            tvGreetings.text = "Howdy, $name ✋"
+        }
     }
+
 
     private fun setupFilter(chipGroup: ChipGroup) {
         chipGroup.setOnCheckedStateChangeListener { _, checkedIds ->
