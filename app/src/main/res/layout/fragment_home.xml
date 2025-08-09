@@ -28,6 +28,7 @@
             android:textColor="@color/grayText"/>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewProfile"
             android:layout_width="40dp"
             app:cardCornerRadius="8dp"
             android:layout_margin="2dp"
