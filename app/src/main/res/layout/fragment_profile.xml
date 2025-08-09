@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    tools:context=".ui.profile.ProfileFragment">
+
+    <ImageButton
+        android:id="@+id/btnBackProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_arrow_back"
+        android:background="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="55dp"/>
+
+    <TextView
+        android:id="@+id/tvBioData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bio-data"
+        app:layout_constraintBottom_toBottomOf="@id/btnBackProfile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btnBackProfile" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/imgUserLayout"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="50dp"
+        app:cardCornerRadius="80dp"
+        app:cardBackgroundColor="@color/blueButton"
+        app:layout_constraintTop_toBottomOf="@id/tvBioData"
+        app:layout_constraintStart_toStartOf="@id/tvBioData"
+        app:layout_constraintEnd_toEndOf="@id/tvBioData">
+
+        <ImageView
+            android:id="@+id/imgUser"
+            android:layout_width="78dp"
+            android:layout_height="78dp"
+            android:layout_gravity="center"
+            android:src="@drawable/profile_bg" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/userRole"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User Participant"
+        android:layout_marginTop="21dp"
+        android:textSize="16sp"
+        android:fontFamily="@font/poppins_bold"
+        app:layout_constraintTop_toBottomOf="@id/imgUserLayout"
+        app:layout_constraintStart_toStartOf="@id/imgUserLayout"
+        app:layout_constraintEnd_toEndOf="@id/imgUserLayout" />
+
+    <TextView
+        android:id="@+id/userEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="radityaramadhan@gmail.com"
+        android:layout_marginTop="4dp"
+        android:textSize="12sp"
+        android:textColor="@color/grayText"
+        android:fontFamily="@font/poppins"
+        app:layout_constraintTop_toBottomOf="@id/userRole"
+        app:layout_constraintStart_toStartOf="@id/userRole"
+        app:layout_constraintEnd_toEndOf="@id/userRole" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnLogout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/blueButton"
+        android:paddingVertical="12dp"
+        android:text="Logout"
+        app:layout_constraintVertical_bias="1"
+        android:layout_marginBottom="20dp"
+        android:textColor="@android:color/white"
+        app:cornerRadius="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/userEmail" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
