@@ -1,5 +1,3 @@
-// app/src/main/java/com/example/kursushub/ui/main/MainActivity.kt
-
 package com.example.kursushub.ui.main
 
 import android.content.Intent
@@ -27,17 +25,12 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
 
         viewModel.getUserSession().observe(this) { (uid, isLoggedIn) ->
-            // Untuk sementara, kita asumsikan jika UID ada, user sudah login
-            // Logika isFirstTimeUser dapat Anda kembangkan lebih lanjut jika diperlukan
             if (isLoggedIn) {
-                // Pengguna sudah login, arahkan ke HomeActivity
                 val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {
-                // Pengguna belum login, cek apakah ini pertama kali
-                // Anda bisa menambahkan logika pengecekan onboarding di sini jika perlu
-                val isFirstTimeUser = true // Asumsi untuk sekarang
+                val isFirstTimeUser = true
                 if (isFirstTimeUser) {
                     val intent = Intent(this, OnboardingActivity::class.java)
                     startActivity(intent)
