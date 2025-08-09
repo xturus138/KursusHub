@@ -7,6 +7,7 @@ import com.example.kursushub.data.local.UserPreferencesRepository
 import com.example.kursushub.ui.auth.login.LoginViewModel
 import com.example.kursushub.ui.auth.register.RegisterViewModel
 import com.example.kursushub.ui.main.MainViewModel
+import com.example.kursushub.ui.profile.ProfileViewModel
 
 class ViewModelFactory(private val repository: UserPreferencesRepository) : ViewModelProvider.NewInstanceFactory() {
 
@@ -21,6 +22,9 @@ class ViewModelFactory(private val repository: UserPreferencesRepository) : View
             }
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
                 MainViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
+                ProfileViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

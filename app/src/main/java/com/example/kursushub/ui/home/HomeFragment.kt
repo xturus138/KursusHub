@@ -8,12 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kursushub.R
 import com.example.kursushub.ui.adapter.SchoolAdapter
+import com.example.kursushub.ui.profile.ProfileFragment
 import com.google.android.material.chip.ChipGroup
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
@@ -43,11 +45,19 @@ class HomeFragment : Fragment() {
         val rvSchools = view.findViewById<RecyclerView>(R.id.rvSchools)
         val etSearch = view.findViewById<EditText>(R.id.etSearch)
         val chipGroup = view.findViewById<ChipGroup>(R.id.chipGroupFilter)
+        val profileButton = view.findViewById<CardView>(R.id.cardViewProfile)
 
         setupRecyclerView(rvSchools)
         observeViewModel()
         setupSearch(etSearch, chipGroup)
         setupFilter(chipGroup)
+
+        profileButton.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, ProfileFragment())
+                .addToBackStack(null)
+                .commit()
+        }
 
         if (savedInstanceState == null) {
             chipGroup.check(R.id.chip_all)
@@ -88,7 +98,6 @@ class HomeFragment : Fragment() {
             Toast.makeText(context, "Error: $error", Toast.LENGTH_LONG).show()
         }
     }
-
 
     private fun setupFilter(chipGroup: ChipGroup) {
         chipGroup.setOnCheckedStateChangeListener { _, checkedIds ->
