@@ -25,6 +25,7 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: HomeViewModel
     private lateinit var schoolAdapter: SchoolAdapter
     private var searchJob: Job? = null
+    private var currentJenjangFilter: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,15 +73,17 @@ class HomeFragment : Fragment() {
         chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
             val checkedId = checkedIds.firstOrNull() ?: R.id.chip_all
 
-            val jenjang = when (checkedId) {
+            currentJenjangFilter = when (checkedId) {
                 R.id.chip_sd -> "SD"
                 R.id.chip_smp -> "SMP"
                 R.id.chip_sma -> "SMA"
                 R.id.chip_smk -> "SMK"
                 else -> null
             }
-            view?.findViewById<EditText>(R.id.etSearch)?.text?.clear()
-            viewModel.getSchools(jenjang)
+            val searchText = view?.findViewById<EditText>(R.id.etSearch)?.text?.toString() ?: ""
+            if (searchText.isEmpty()) {
+                viewModel.getSchools(currentJenjangFilter)
+            }
         }
     }
 
@@ -92,15 +95,18 @@ class HomeFragment : Fragment() {
                 searchJob?.cancel()
                 searchJob = MainScope().launch {
                     delay(500)
-                    val query = s.toString()
+                    val query = s.toString().trim()
                     if (query.length > 2) {
-                        chipGroup.clearCheck()
                         viewModel.searchSchools(query)
                     } else if (query.isEmpty()) {
-                        chipGroup.check(R.id.chip_all)
+                        viewModel.getSchools(currentJenjangFilter)
+                    }
+                    else {
+                        viewModel.getSchools(currentJenjangFilter)
                     }
                 }
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
     }

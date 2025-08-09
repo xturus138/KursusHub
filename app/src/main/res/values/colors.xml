@@ -6,4 +6,5 @@
     <color name="blueButton">#3461FD</color>
     <color name="grayText">#61677D</color>
     <color name="grayBackground">#F5F9FE</color>
+    <color name="grayBackground2">#D3D9EA</color>
 </resources>
