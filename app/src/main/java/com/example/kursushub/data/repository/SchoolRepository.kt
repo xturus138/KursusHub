@@ -21,9 +21,9 @@ class SchoolRepository {
         apiService = retrofit.create(ApiService::class.java)
     }
 
-    suspend fun getSchools(jenjang: String?): List<School> {
+    suspend fun getSchools(jenjang: String?, page: Int): List<School> {
         val path = if (jenjang.isNullOrBlank()) "sekolah" else "sekolah/$jenjang"
-        return apiService.getSchools(path = path).dataSekolah
+        return apiService.getSchools(path = path, page = page).dataSekolah
     }
 
     suspend fun searchSchools(query: String): List<School> {

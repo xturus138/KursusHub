@@ -24,6 +24,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
     private lateinit var schoolAdapter: SchoolAdapter
+    private lateinit var layoutManager: LinearLayoutManager
     private var searchJob: Job? = null
     private var currentJenjangFilter: String? = null
 
@@ -50,18 +51,38 @@ class HomeFragment : Fragment() {
 
         if (savedInstanceState == null) {
             chipGroup.check(R.id.chip_all)
+            viewModel.loadSchools(currentJenjangFilter, reset = true)
         }
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        schoolAdapter = SchoolAdapter(emptyList())
+        layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = layoutManager
+        schoolAdapter = SchoolAdapter(mutableListOf())
         recyclerView.adapter = schoolAdapter
+
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
+                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+
+                if (!viewModel.isLoading) {
+                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                        && firstVisibleItemPosition >= 0
+                        && totalItemCount >= 20) {
+                        viewModel.loadSchools(currentJenjangFilter)
+                    }
+                }
+            }
+        })
     }
 
     private fun observeViewModel() {
         viewModel.schools.observe(viewLifecycleOwner) { schools ->
-            schoolAdapter.updateData(schools ?: emptyList())
+            schoolAdapter.setData(schools ?: emptyList())
         }
         viewModel.error.observe(viewLifecycleOwner) { error ->
             Toast.makeText(context, "Error: $error", Toast.LENGTH_LONG).show()
@@ -70,7 +91,7 @@ class HomeFragment : Fragment() {
 
 
     private fun setupFilter(chipGroup: ChipGroup) {
-        chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+        chipGroup.setOnCheckedStateChangeListener { _, checkedIds ->
             val checkedId = checkedIds.firstOrNull() ?: R.id.chip_all
 
             currentJenjangFilter = when (checkedId) {
@@ -82,7 +103,7 @@ class HomeFragment : Fragment() {
             }
             val searchText = view?.findViewById<EditText>(R.id.etSearch)?.text?.toString() ?: ""
             if (searchText.isEmpty()) {
-                viewModel.getSchools(currentJenjangFilter)
+                viewModel.loadSchools(currentJenjangFilter, reset = true)
             }
         }
     }
@@ -99,10 +120,7 @@ class HomeFragment : Fragment() {
                     if (query.length > 2) {
                         viewModel.searchSchools(query)
                     } else if (query.isEmpty()) {
-                        viewModel.getSchools(currentJenjangFilter)
-                    }
-                    else {
-                        viewModel.getSchools(currentJenjangFilter)
+                        viewModel.loadSchools(currentJenjangFilter, reset = true)
                     }
                 }
             }

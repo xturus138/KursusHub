@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kursushub.R
 import com.example.kursushub.data.model.School
 
-class SchoolAdapter(private var schools: List<School>) :
+class SchoolAdapter(private var schools: MutableList<School>) :
     RecyclerView.Adapter<SchoolAdapter.SchoolViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SchoolViewHolder {
@@ -24,8 +24,9 @@ class SchoolAdapter(private var schools: List<School>) :
 
     override fun getItemCount(): Int = schools.size
 
-    fun updateData(newSchools: List<School>) {
-        schools = newSchools
+    fun setData(newSchools: List<School>) {
+        schools.clear()
+        schools.addAll(newSchools)
         notifyDataSetChanged()
     }
 
@@ -38,5 +39,4 @@ class SchoolAdapter(private var schools: List<School>) :
             schoolDetails.text = "${school.jenjang} - ${school.kota}, ${school.provinsi}"
         }
     }
-
 }

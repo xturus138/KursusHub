@@ -10,7 +10,7 @@ interface ApiService {
     suspend fun getSchools(
         @Path(value = "path", encoded = true) path: String,
         @Query("page") page: Int = 1,
-        @Query("perPage") perPage: Int = 10
+        @Query("perPage") perPage: Int = 20
     ): SchoolResponse
 
     @GET("sekolah/s")

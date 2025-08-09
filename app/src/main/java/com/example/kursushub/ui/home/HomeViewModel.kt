@@ -17,13 +17,34 @@ class HomeViewModel : ViewModel() {
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
 
-    fun getSchools(jenjang: String? = null) {
+    private var currentPage = 1
+    var isLoading = false
+    private var isLastPage = false
+
+    fun loadSchools(jenjang: String?, reset: Boolean = false) {
+        if (isLoading || (isLastPage && !reset)) return
+
+        if (reset) {
+            currentPage = 1
+            isLastPage = false
+        }
+
         viewModelScope.launch {
+            isLoading = true
             try {
-                _schools.value = repository.getSchools(jenjang)
+                val newSchools = repository.getSchools(jenjang, currentPage)
+                if (newSchools.isEmpty()) {
+                    isLastPage = true
+                } else {
+                    val currentSchools = if (reset) mutableListOf() else _schools.value?.toMutableList() ?: mutableListOf()
+                    currentSchools.addAll(newSchools)
+                    _schools.value = currentSchools
+                    currentPage++
+                }
             } catch (e: Exception) {
                 _error.value = "Failed to fetch data: ${e.message}"
-                _schools.value = emptyList()
+            } finally {
+                isLoading = false
             }
         }
     }
