@@ -13,5 +13,7 @@ data class School(
     val kota: String?,
 
     @SerializedName("propinsi")
-    val provinsi: String?
+    val provinsi: String?,
+
+    var status: String? = null
 )

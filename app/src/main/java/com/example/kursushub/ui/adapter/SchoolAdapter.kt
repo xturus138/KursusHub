@@ -60,9 +60,9 @@ class SchoolAdapter(private var schools: MutableList<School>) :
                 dialogSchoolCity.text = "Kota: ${school.kota}"
                 dialogSchoolProvince.text = "Provinsi: ${school.provinsi}"
 
-                // Cek jika sekolah memiliki status (berarti dari halaman status)
-                if (school.status != null) {
-                    dialogSchoolStatus.text = "Status: ${school.status}"
+                // Logika untuk menampilkan status atau tombol "Lamar"
+                if (AppliedSchoolRepository.getInstance().isApplied(school)) {
+                    dialogSchoolStatus.text = "Status: Pending"
                     dialogSchoolStatus.visibility = View.VISIBLE
                     btnApply.visibility = View.GONE
                 } else {
@@ -71,7 +71,6 @@ class SchoolAdapter(private var schools: MutableList<School>) :
                 }
 
                 btnApply.setOnClickListener {
-                    school.status = "Pending" // Set status saat melamar
                     AppliedSchoolRepository.getInstance().addAppliedSchool(school)
                     Toast.makeText(context, "Berhasil melamar ke ${school.namaSekolah}", Toast.LENGTH_SHORT).show()
                     dialog.dismiss()

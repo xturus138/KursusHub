@@ -31,11 +31,14 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSeeDetails"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lihat Detail"
+            android:layout_marginTop="10dp"
+            android:text="See Details"
+            android:backgroundTint="@color/blueButton"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/grayBackground"
             android:layout_gravity="end"
-            android:textColor="@color/blueButton" />
+            android:textColor="@color/white" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -16,6 +16,10 @@ class AppliedSchoolRepository {
         }
     }
 
+    fun isApplied(school: School): Boolean {
+        return _appliedSchools.value?.contains(school) ?: false
+    }
+
     companion object {
         @Volatile
         private var INSTANCE: AppliedSchoolRepository? = null

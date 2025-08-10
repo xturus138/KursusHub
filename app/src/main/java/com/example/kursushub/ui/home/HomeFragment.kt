@@ -69,6 +69,8 @@ class HomeFragment : Fragment() {
         }
     }
 
+
+
     private fun setupRecyclerView(recyclerView: RecyclerView) {
         layoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = layoutManager
