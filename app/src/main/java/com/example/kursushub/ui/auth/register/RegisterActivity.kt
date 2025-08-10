@@ -43,7 +43,6 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
         val factory = ViewModelFactory.getInstance(this)
         viewModel = ViewModelProvider(this, factory)[RegisterViewModel::class.java]
 

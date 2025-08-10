@@ -69,6 +69,7 @@ class LoginActivity : AppCompatActivity() {
                 is LoginViewModel.AuthResult.Success -> {
                     Toast.makeText(this, result.message, Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this, HomeActivity::class.java))
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out) // Tambahkan baris ini
                 }
                 is LoginViewModel.AuthResult.Error -> {
                     Toast.makeText(this, result.error, Toast.LENGTH_SHORT).show()
@@ -100,12 +101,14 @@ class LoginActivity : AppCompatActivity() {
         // Navigate to Register
         binding.tvSignUp.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
 
         // Forgot Password (implement as needed)
         binding.tvForgetPassword.setOnClickListener {
             // Implement forgot password logic
-            Toast.makeText(this, "Forgot Password clicked", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Contact administrator!", Toast.LENGTH_SHORT).show()
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
     }
 }
