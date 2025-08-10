@@ -4,16 +4,16 @@ import com.google.gson.annotations.SerializedName
 
 data class School(
     @SerializedName("sekolah")
-    val namaSekolah: String?,
+    val namaSekolah: String? = null,
 
     @SerializedName("bentuk")
-    val jenjang: String?,
+    val jenjang: String? = null,
 
     @SerializedName("kabupaten_kota")
-    val kota: String?,
+    val kota: String? = null,
 
     @SerializedName("propinsi")
-    val provinsi: String?,
+    val provinsi: String? = null,
 
     var status: String? = null
 )

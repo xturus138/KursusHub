@@ -16,6 +16,7 @@ class StatusFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: SchoolAdapter
+    private lateinit var appliedSchoolRepository: AppliedSchoolRepository
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,6 +25,7 @@ class StatusFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_status, container, false)
         recyclerView = view.findViewById(R.id.rvAppliedSchools)
         setupRecyclerView()
+        appliedSchoolRepository = AppliedSchoolRepository.getInstance()
         observeAppliedSchools()
         return view
     }
@@ -35,7 +37,7 @@ class StatusFragment : Fragment() {
     }
 
     private fun observeAppliedSchools() {
-        AppliedSchoolRepository.getInstance().appliedSchools.observe(viewLifecycleOwner, Observer { schools ->
+        appliedSchoolRepository.getAppliedSchools().observe(viewLifecycleOwner, Observer { schools ->
             adapter.setData(schools)
         })
     }

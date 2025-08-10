@@ -7,10 +7,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.findViewTreeLifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kursushub.R
 import com.example.kursushub.data.model.School
 import com.example.kursushub.data.repository.AppliedSchoolRepository
+import kotlinx.coroutines.launch
 
 class SchoolAdapter(private var schools: MutableList<School>) :
     RecyclerView.Adapter<SchoolAdapter.SchoolViewHolder>() {
@@ -60,20 +63,23 @@ class SchoolAdapter(private var schools: MutableList<School>) :
                 dialogSchoolCity.text = "Kota: ${school.kota}"
                 dialogSchoolProvince.text = "Provinsi: ${school.provinsi}"
 
-                // Logika untuk menampilkan status atau tombol "Lamar"
-                if (AppliedSchoolRepository.getInstance().isApplied(school)) {
-                    dialogSchoolStatus.text = "Status: Pending"
-                    dialogSchoolStatus.visibility = View.VISIBLE
-                    btnApply.visibility = View.GONE
-                } else {
-                    dialogSchoolStatus.visibility = View.GONE
-                    btnApply.visibility = View.VISIBLE
+                itemView.findViewTreeLifecycleOwner()?.lifecycleScope?.launch {
+                    if (AppliedSchoolRepository.getInstance().isApplied(school)) {
+                        dialogSchoolStatus.text = "Status: Pending"
+                        dialogSchoolStatus.visibility = View.VISIBLE
+                        btnApply.visibility = View.GONE
+                    } else {
+                        dialogSchoolStatus.visibility = View.GONE
+                        btnApply.visibility = View.VISIBLE
+                    }
                 }
 
                 btnApply.setOnClickListener {
-                    AppliedSchoolRepository.getInstance().addAppliedSchool(school)
-                    Toast.makeText(context, "Berhasil melamar ke ${school.namaSekolah}", Toast.LENGTH_SHORT).show()
-                    dialog.dismiss()
+                    itemView.findViewTreeLifecycleOwner()?.lifecycleScope?.launch {
+                        AppliedSchoolRepository.getInstance().addAppliedSchool(school)
+                        Toast.makeText(context, "Berhasil melamar ke ${school.namaSekolah}", Toast.LENGTH_SHORT).show()
+                        dialog.dismiss()
+                    }
                 }
 
                 dialog.show()
