@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kursushub.R
 import com.example.kursushub.ui.ViewModelFactory
 import com.example.kursushub.ui.adapter.SchoolAdapter
+import com.example.kursushub.ui.profile.ProfileFragment
 import com.google.android.material.chip.ChipGroup
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
@@ -56,6 +58,14 @@ class HomeFragment : Fragment() {
         if (savedInstanceState == null) {
             chipGroup.check(R.id.chip_all)
             viewModel.loadSchools(currentJenjangFilter, reset = true)
+        }
+
+        val cardViewProfile: CardView = view.findViewById(R.id.cardViewProfile)
+        cardViewProfile.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, ProfileFragment())
+                .addToBackStack(null)
+                .commit()
         }
     }
 

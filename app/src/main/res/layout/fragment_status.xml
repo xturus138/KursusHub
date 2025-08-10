@@ -5,11 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".ui.status.StatusFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Status Fragment"
-        android:layout_gravity="center"
-        android:textSize="24sp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAppliedSchools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="40dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"/>
 
 </FrameLayout>
