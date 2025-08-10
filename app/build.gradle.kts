@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    implementation("com.google.firebase:firebase-firestore-ktx:25.1.1")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     implementation(libs.gson)
     implementation(libs.retrofit)
