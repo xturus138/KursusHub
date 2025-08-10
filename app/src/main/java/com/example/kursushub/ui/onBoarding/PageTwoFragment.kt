@@ -29,7 +29,8 @@ class PageTwoFragment : Fragment() {
         binding.btnStart.setOnClickListener {
             val intent = Intent(activity, LoginActivity::class.java)
             startActivity(intent)
-            activity?.finish()
+            activity?.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+            activity?.finish() // Tutup OnboardingActivity
         }
     }
 

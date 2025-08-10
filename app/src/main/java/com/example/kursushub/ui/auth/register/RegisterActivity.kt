@@ -46,7 +46,6 @@ class RegisterActivity : AppCompatActivity() {
         val factory = ViewModelFactory.getInstance(this)
         viewModel = ViewModelProvider(this, factory)[RegisterViewModel::class.java]
 
-        // Configure Google Sign-In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -59,7 +58,6 @@ class RegisterActivity : AppCompatActivity() {
             insets
         }
 
-        // Observe registration status
         viewModel.registerStatus.observe(this) { result ->
             when (result) {
                 is RegisterViewModel.AuthResult.Loading -> {
@@ -69,7 +67,11 @@ class RegisterActivity : AppCompatActivity() {
                 }
                 is RegisterViewModel.AuthResult.Success -> {
                     Toast.makeText(this, result.message, Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this, HomeActivity::class.java))
+                    val intent = Intent(this, HomeActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+                    finish()
                 }
                 is RegisterViewModel.AuthResult.Error -> {
                     Toast.makeText(this, result.error, Toast.LENGTH_SHORT).show()
@@ -80,7 +82,6 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
 
-        // Email/Password registration
         binding.btnSignUp.setOnClickListener {
             val name = binding.etName.text.toString().trim()
             val email = binding.etEmail.text.toString().trim()
@@ -93,15 +94,16 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
 
-        // Google Sign-In
         binding.btnGoogle.setOnClickListener {
             val signInIntent = googleSignInClient.signInIntent
             googleSignInLauncher.launch(signInIntent)
         }
 
-        // Navigate to Login
         binding.tvSignInSignUp.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java))
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
     }
 }

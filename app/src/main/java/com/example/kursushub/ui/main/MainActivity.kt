@@ -26,22 +26,16 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.getUserSession().observe(this) { (uid, isLoggedIn) ->
             if (isLoggedIn) {
-                startActivity(Intent(this, HomeActivity::class.java))
+                val intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                 finish()
             } else {
-                val isFirstTimeUser = true
-                if (isFirstTimeUser) {
-                    startActivity(Intent(this, OnboardingActivity::class.java))
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
-                    finish()
-                } else {
-                    startActivity(Intent(this, LoginActivity::class.java))
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
-                    finish()
-                }
+                val intent = Intent(this, OnboardingActivity::class.java)
+                startActivity(intent)
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+                finish()
             }
         }
-
     }
 }

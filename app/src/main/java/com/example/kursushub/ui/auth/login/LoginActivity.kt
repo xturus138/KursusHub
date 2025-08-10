@@ -58,7 +58,6 @@ class LoginActivity : AppCompatActivity() {
             insets
         }
 
-        // Observe login status
         viewModel.loginStatus.observe(this) { result ->
             when (result) {
                 is LoginViewModel.AuthResult.Loading -> {
@@ -68,8 +67,11 @@ class LoginActivity : AppCompatActivity() {
                 }
                 is LoginViewModel.AuthResult.Success -> {
                     Toast.makeText(this, result.message, Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this, HomeActivity::class.java))
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out) // Tambahkan baris ini
+                    val intent = Intent(this, HomeActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+                    finish()
                 }
                 is LoginViewModel.AuthResult.Error -> {
                     Toast.makeText(this, result.error, Toast.LENGTH_SHORT).show()
@@ -80,7 +82,6 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        // Email/Password login
         binding.btnLogIn.setOnClickListener {
             val email = binding.etEmail.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
@@ -92,21 +93,17 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        // Google Sign-In
         binding.btnGoogle.setOnClickListener {
             val signInIntent = googleSignInClient.signInIntent
             googleSignInLauncher.launch(signInIntent)
         }
 
-        // Navigate to Register
         binding.tvSignUp.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
 
-        // Forgot Password (implement as needed)
         binding.tvForgetPassword.setOnClickListener {
-            // Implement forgot password logic
             Toast.makeText(this, "Contact administrator!", Toast.LENGTH_SHORT).show()
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
